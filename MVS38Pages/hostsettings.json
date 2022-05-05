@@ -1,0 +1,6 @@
+{
+    "Host": "127.0.0.1",
+    "Port": "3505",
+    "HostHttpUrl": "http://127.0.0.1:8038/cgi-bin/tasks/syslog",
+    "JobFilePath": "/mvs38/hercules/httproot/jobs"
+}

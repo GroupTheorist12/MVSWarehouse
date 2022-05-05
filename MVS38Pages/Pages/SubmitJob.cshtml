@@ -1,0 +1,164 @@
+@page
+@model MVS38Pages.Pages.SubmitJob
+@{
+    ViewData["Title"] = "SubmitJob";
+}
+
+<style>
+    .btn {
+        background-color: DodgerBlue;
+        border: none;
+        color: white;
+        padding: 8px 8px;
+        cursor: pointer;
+        font-size: 10px;
+    }
+
+    /* Darker background on mouse-over */
+    .btn:hover {
+        background-color: RoyalBlue;
+    }
+
+    .fil {
+        cursor: pointer;
+        font-size: 10px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .myframe {
+        background-color: whitesmoke;
+        border-color: #272822;
+        color: #ffffff;
+
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 300px;
+        /* Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        background-color: white;
+        padding: 10px;
+    }
+
+    .grid-item {
+        background-color: white;
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        font-size: 30px;
+
+    }
+
+    .form-inline {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+    }
+
+    /* Add some margins for each label */
+    .form-inline label {
+        margin: 5px 10px 5px 0;
+        font-size: 10px;
+
+    }
+
+    /* Style the input fields */
+    .form-inline input {
+        vertical-align: middle;
+        margin: 5px 10px 5px 0;
+        padding: 10px;
+        font-size: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    /* Style the submit button */
+    .form-inline button {
+        padding: 10px 20px;
+        background-color: dodgerblue;
+        border: 1px solid #ddd;
+        font-size: 10px;
+        color: white;
+    }
+
+    .form-inline button:hover {
+        background-color: royalblue;
+    }
+
+    textarea#styled {
+        width: 600px;
+        height: 270px;
+        border: 3px solid #cccccc;
+        padding: 5px;
+        font-family: Tahoma, sans-serif;
+        font-size: 10px;
+        /*background-image: url(bg.gif);*/
+        background-position: bottom right;
+        background-repeat: no-repeat;
+        /* Determine appearance of code editor */
+        background-color: #272822;
+        border-color: #272822;
+        color: #ffffff;
+    }
+</style>
+
+@section Scripts {
+<script>
+  const element = document.getElementById("btnSub2");
+  element.addEventListener("click", function () {
+    document.getElementById("TextValue").value = document.getElementById("styled").value;
+  });
+</script>
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Submit JCL</h1>
+</div>
+
+<div class="grid-container">
+    <div class="grid-item">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFile">
+            <input type="file" asp-for="Upload" class="fil" />
+            <input type="submit" value="Upload File" class="btn" />
+        </form>
+    </div>
+    <div class="grid-item">
+        <form method="post" asp-page-handler="SubmitJcl" class="form-inline">
+            <label for="Host">Host:</label>
+            <input asp-for="Host" id="Host" readonly="true" />
+            <label for="Port">Port:</label>
+            <input asp-for="Port" id="Port" readonly="true" />
+            <input type="hidden" asp-for="TextValue" id="TextValue" />
+
+            <button type="submit" class="btn" id="btnSub2">Submit Jcl</button>
+        </form>
+
+    </div>
+    <div class="grid-item">
+        <textarea id="styled">@Model.JclText</textarea>
+    </div>
+    <div class="grid-item">
+    <iframe src="@Model.HostHttpUrl" height="270px" width="600px" frameborder="0"
+      marginheight="20" marginwidth="35" scrolling="auto" class="myframe">
+    </iframe>
+    </div>
+</div>
+</div>
