@@ -115,6 +115,7 @@ namespace MVS38Pages.Pages
             JclText = TextValue;
             if (JclText != null && JclText != string.Empty)
             {
+                HttpContext.Session.SetString("JobName", JclText.Substring(2, 8).Trim());
                 byte[] sendBuffer = Encoding.ASCII.GetBytes(JclText);
                 netStream.Write(sendBuffer);
 

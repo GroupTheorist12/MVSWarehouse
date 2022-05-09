@@ -4,21 +4,36 @@
     ViewData["Title"] = "ViewPrintSpool";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .my-pre{
+  line-height:1.2em;
+  background:linear-gradient(180deg,#ccc 0,#ccc 1.2em,#eee 0);
+  background-size:2.4em 2.4em;
+  background-origin:content-box;
+  
+  padding:0 20px;
+  text-align:justify;
+  font-family:calibri,arial,sans-serif;
+}
+</style>
+<div class="text-center">
+    <h1>View Print Spool</h1>
+
+</div>
 
 <form method="post">
 
     <select asp-for="SelectedCategoryId" asp-items="@Model.CategoryItems">
         <option>Select one</option>
     </select>
-<br/>
-<br />
-    <div>
         <button type="submit">View</button>
-    </div>
+        <ul style="list-style-type:none;">
+            <li><span>Job Name: </span><span>@Model.JobName</span></li>
+            <li><span>Job Number: </span><span>@Model.JobNumber</span></li>
+        </ul>
     <hr />
 
-    <pre>
+    <pre class="my-pre">
       @Model.JobContent
     </pre>
 </form>

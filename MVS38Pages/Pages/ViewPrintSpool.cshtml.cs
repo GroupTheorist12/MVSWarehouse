@@ -65,21 +65,51 @@ namespace MVS38Pages.Pages
             FileInfo fi2 = new FileInfo(file2);
             return fi2.CreationTime.CompareTo(fi1.CreationTime);
         }
+
+        public string JobNumber { get; set; }
+        public string JobName { get; set; }
+
         public void OnGet()
         {
 
             List<SelectListItem> items = new List<SelectListItem>();
 
             List<string> sorted = fileEntries.ToList();
+            JobInfo jiCheck = null;
 
             sorted.Sort(CompareFiles);
 
             JobContent = System.IO.File.ReadAllText(sorted[0]);
 
+            char gug = (char)0xc;
+
+            JobContent = JobContent.Replace(gug, '\n');
+
+            int ind = 0;
             foreach (string fil in sorted)
             {
-                FileInfo fi = new FileInfo(fil);
-                items.Add(new SelectListItem { Text = fi.Name, Value = fi.FullName });
+                JobInfo ji = new JobInfo(fil);
+
+                if (ji.IsJob)
+                {
+                    if (ind == 0)
+                    {
+                        jiCheck = ji;
+                        ind++;
+                    }
+
+                    items.Add(new SelectListItem { Text = $"{ji.JobName} - ({ji.JobNumber})", Value = ji.Path });
+                }
+            }
+
+            if (jiCheck != null)
+            {
+                JobContent = System.IO.File.ReadAllText(jiCheck.Path);
+
+                JobContent = JobContent.Replace(gug, '\n');
+
+                JobName = jiCheck.JobName;
+                JobNumber = jiCheck.JobNumber;
             }
 
             CategoryItems = items;
@@ -95,15 +125,28 @@ namespace MVS38Pages.Pages
 
             sorted.Sort(CompareFiles);
 
+
             foreach (string fil in sorted)
             {
-                FileInfo fi = new FileInfo(fil);
-                items.Add(new SelectListItem { Text = fi.Name, Value = fi.FullName });
+                JobInfo ji = new JobInfo(fil);
+
+                if (ji.IsJob)
+                {
+                    items.Add(new SelectListItem { Text = $"{ji.JobName} - ({ji.JobNumber})", Value = ji.Path });
+                }
             }
 
             CategoryItems = items;
 
             JobContent = System.IO.File.ReadAllText(selectedCategoryId);
+
+            JobInfo jiCheck = new JobInfo(SelectedCategoryId);
+            JobName = jiCheck.JobName;
+            JobNumber = jiCheck.JobNumber;
+
+            char gug = (char)0xc;
+
+            JobContent = JobContent.Replace(gug, '\n');
 
             return new PageResult();
         }
