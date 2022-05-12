@@ -220,7 +220,11 @@ fn main() {
 
     fs::create_dir("printtools").expect("printtool dir not created");
 
-    println!("Creating prtspools binary");
+    println!("Creating printtools directory");
+
+    fs::create_dir("hercules/httproot/jobs").expect("jobs dir not created");
+
+    println!("Creating jobs directory");
 
     let mut buffer2 = File::create("printtools/prtspool.c").expect("file to be written");
 
