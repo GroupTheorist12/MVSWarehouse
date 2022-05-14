@@ -56,13 +56,16 @@ info: Microsoft.Hosting.Lifetime[14]
 After running dotnet run, the dotnet cli will build the project, and run a web server running on a local port. (your port may be different than above)
 
 Open a web browser and go to the web address and click on the Submit Job tab:
+
 ![submit_job1](submit_job1.png)
 
 An example jcl file is in the MVS38Pages directory. Click the choose file button and navigate to the MVS38Pages directory, choose hello.jcl then click the ‘Upload File’ button.
 
 In the right pane, click on the submit jcl button. This will submit the job to MVS.
+
 ![submit_job2](submit_job2.png)
 
 Click on the View Print Spool tab to view the output of the job:
+
 ![view_print_spool](view_print_spool.png)
 
